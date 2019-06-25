@@ -4,6 +4,10 @@ import os
 import requests 
 import sys 
 
+BASE_URL_HOMOLOG = 'https://api-hom.userede.com.br/redelabs'
+BASE_URL_DEV = None
+BASE_URL = None
+
 class AuthorizationToken:
     def __init__(self):
         pass  
@@ -11,36 +15,43 @@ class AuthorizationToken:
     def create(self):
         pass 
 
+class Parameters:
+
+    @staticmethod
+    def parseParameters(**kwargs):
+        for k, v in kwargs.items():
+            pass 
 
 class RequestsConciliacao:
     def __init__(self):
         pass 
 
-    def consultarVendas(self):
+    def consultarVendas(self, **kwargs):
+        url = '/v1/sales'
+
+
+    def consultarParcelas(self, **kwargs):
+        url = '/v1/sales/installments' 
+
+    def consultarPagamentosSumarizadosCIP(self, **kwargs):
+        url = '/v1/payments' 
+
+    def consultarpagamentosOrdemCredito(self, **kwargs):
         pass 
 
-    def consultarParcelas(self):
+    def consultarRecebiveis(self, **kwargs):
         pass 
 
-    def consultarPagamentosSumarizadosCIP(self):
+    def consultarRecebiveisSumarizados(self, **kwargs):
         pass 
 
-    def consultarpagamentosOrdemCredito(self):
+    def consultarDebitos(self, **kwargs):
         pass 
 
-    def consultarRecebiveis(self):
+    def consultarDebitosSumarizados(self, **kwargs):
         pass 
 
-    def consultarRecebiveisSumarizados(self):
-        pass 
-
-    def consultarDebitos(self):
-        pass 
-
-    def consultarDebitosSumarizados(self):
-        pass 
-
-    def consultarListaAjusteDebitos(self):
+    def consultarListaAjusteDebitos(self, **kwargs):
         pass 
 
 
@@ -48,23 +59,23 @@ class RequestsCredenciamentos:
     def __init__(self):
         pass 
 
-    def createPropostaCredenciamento(self):
+    def createPropostaCredenciamento(self, **kwargs):
         pass 
 
-    def consultarPropostaCredenciamento(self, idcredenciamento):
+    def consultarPropostaCredenciamento(self, **kwargs):
         pass 
 
-    def consultarEstabelecimentoComercial(self):
+    def consultarEstabelecimentoComercial(self, **kwargs):
         pass 
 
-    def cancelarEstabelcimentoComercial(self):
+    def cancelarEstabelcimentoComercial(self, **kwargs):
         pass 
 
-    def consultarPrecos(self):
+    def consultarPrecos(self, **kwargs):
         pass 
 
-    def consultarMCCs(self):
+    def consultarMCCs(self, **kwargs):
         pass 
 
-    def realizarLeadCredenciamento(self):
+    def realizarLeadCredenciamento(self, **kwargs):
         pass 
