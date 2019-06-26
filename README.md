@@ -61,7 +61,7 @@ r = main.RequestsConciliacao(
     COLOCAR_SEU_USUARIO,
     COLOCAR_SUA_SENHA,
     COLOCAR_SEU_SECRET_TOKEN
-) # Desta forma automaticamente o Sandbox (Homologação está selecionado como ambiente)
+) # Desta forma seleciona automaticamente o Sandbox (Homologação está selecionado como ambiente)
 
 prd = main.RequestsConciliacao(
     COLOCAR_SEU_USUARIO,
