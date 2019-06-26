@@ -71,3 +71,9 @@ prd = main.RequestsConciliacao(
 ) # Desta forma seleciona-se o ambiente de produção
 
 ```
+
+## TO-DO
+* Validar bodies em métodos POST para verificar se todos os campos obrigatórios estão presentes
+* Validar todos os query string parameters obrigatórios estão presentes na URL
+* Criar mensagem amigável para o usuário quando faltar um parametro obrigatório
+* Caso resultados retornem paginados criar método recursivo para busca de todos os dados em somente uma chamada
