@@ -151,7 +151,7 @@ class RequestsConciliacao:
         url = '/proposal/v1/pricing' 
         return self.get(url, params)
 
-    def consultarMCC(self, params: dict):
+    def consultarMCCs(self, params: dict):
         url = '/brand/v1/mcc'
         return self.get(url, params) 
 

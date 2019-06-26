@@ -7,7 +7,7 @@ Documentação da API:
 ### Forma de uso:
 
 ```
-import rede
+from rede import main
 
 r = main.RequestsConciliacao(
     COLOCAR_SEU_USUARIO,
