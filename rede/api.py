@@ -55,7 +55,6 @@ class Parameters:
 class RequestsConciliacao:
 
     def __init__(self, user, password, token):
-        # Somente implementado métodos de homologação
         auth = AuthorizationToken(user, password, token, True)
         self.authorization = auth.createToken()
         self.token = self.authorization.get('token_type') + ' ' + self.authorization.get('access_token')
@@ -68,7 +67,6 @@ class RequestsConciliacao:
         self.urlbase = BASE_URL_HOMOLOG
 
     def get(self, url, params: dict):
-        print(self.header_request)
         r = requests.get(self.urlbase+url, headers=self.header_request, params=params)
 
         if r.status_code != requests.codes.ok:
@@ -136,7 +134,8 @@ class RequestsConciliacao:
 
     def consultarPropostaCredenciamentoPorId(self, id: str):
         url = '/proposal/v1/affiliates/{id}'.format(id=id) 
-        return self.get(url)
+        print(url)
+        return self.get(url, {})
 
     def consultarEstabelecimentoComercial(self, params: dict):
         url = '/customer/v1/merchants'

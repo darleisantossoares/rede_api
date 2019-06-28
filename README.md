@@ -7,9 +7,9 @@ Documentação da API:
 ### Forma de uso:
 
 ```
-from rede import main
+from rede import api
 
-r = main.RequestsConciliacao(
+r = api.RequestsConciliacao(
     COLOCAR_SEU_USUARIO,
     COLOCAR_SUA_SENHA,
     COLOCAR_SEU_SECRET_TOKEN
@@ -57,13 +57,13 @@ Todos os métodos disponíveis na documentação da rede foram implementados, se
 Até o exato momento a rede só disponibilizou o ambiente de homologação, porém para selecionar o ambiente basta criar uma estância da classe da seguinte forma
 
 ```
-r = main.RequestsConciliacao(
+r = api.RequestsConciliacao(
     COLOCAR_SEU_USUARIO,
     COLOCAR_SUA_SENHA,
     COLOCAR_SEU_SECRET_TOKEN
 ) # Desta forma seleciona automaticamente o Sandbox (Homologação está selecionado como ambiente)
 
-prd = main.RequestsConciliacao(
+prd = api.RequestsConciliacao(
     COLOCAR_SEU_USUARIO,
     COLOCAR_SUA_SENHA,
     COLOCAR_SEU_SECRET_TOKEN,
