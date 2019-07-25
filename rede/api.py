@@ -17,25 +17,19 @@ class AuthorizationToken:
         self.user = user 
         self.password = password
         self.header_authorization = {
-            'Accept': '*/*',
-            'Authorization': self.token,
-            'Cache-Control': 'no-cache',
-            'Connection': 'keep-alive',
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'host': 'api-hom.userede.com.br',
-            'accept-encoding': 'gzip, deflate',
-            'content-length': '74'
+                   'Content-Type': 'application/x-www-form-urlencoded',
+                   'authorization': 'Basic ZGUxMzg5YzYtNDJhMy00MjMyLWJmZjctYWRmZmE0N2EyYTRhOmdZVEdvc3ZDaEk='
         }
         self.payload = 'grant_type=password&username='+user+'&password='+password
 
     def createToken(self):
 
         r = requests.post(
-            'https://api-hom.userede.com.br/redelabs/oauth/token',
+            'https://api-hom.userede.com.br/redelabs/oauth/token', verify=False,
             headers=self.header_authorization,
             data=self.payload)
 
-        assert (r.status_code == 200),"Token request error"
+        assert (r.status_code == 200), "Token request error"
 
         return json.loads(r.text) 
 
@@ -47,7 +41,7 @@ class Parameters:
         params = ''
         for i, (k, v) in enumerate(kwargs.items()):
             sep = '?' if i == 0 else '&'
-            params = ''.join([params,sep,k,'=',v])
+            params = ''.join([params, sep, k, '=', v])
 
         return params
 
