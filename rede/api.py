@@ -1,6 +1,7 @@
 # coding: utf-8
 from datetime import datetime
 from .exceptions import RequestGetError
+import base64
 import json
 import os
 import requests
@@ -19,7 +20,7 @@ class AuthorizationToken:
         self.token_pass = token_pass
         self.header_authorization = {
                    'Content-Type': 'application/x-www-form-urlencoded',
-                   'authorization': os.environ['token_concil_api_rede']
+                   'authorization': self._token_base_64()
         }
         self.payload = 'grant_type=password&username='+user+'&password='+password
 
@@ -34,6 +35,10 @@ class AuthorizationToken:
         assert (r.status_code == 200), "Token request error"
 
         return json.loads(r.text)
+
+    def _token_base_64(self):
+        _token = self.token_user + ':' + self.token_pass
+        return base64.b64encode(_token.encode())
 
 
 class Parameters:
