@@ -1,37 +1,39 @@
 # coding: utf-8
-from datetime import datetime 
+from datetime import datetime
 from .exceptions import RequestGetError
 import json
-import os 
-import requests 
-import sys 
+import os
+import requests
+import sys
 
 BASE_URL_HOMOLOG = 'https://api-hom.userede.com.br/redelabs'
-BASE_URL_DEV = None
-BASE_URL = None
+BASE_URL_PROD = 'https://api.userede.com.br/redelabs'
 
 class AuthorizationToken:
 
-    def __init__(self, user, password, token, sandbox=True):
+    def __init__(self, user, password, token, token_user, token_pass, sandbox=False):
         self.token = token
-        self.user = user 
+        self.user = user
         self.password = password
+        self.token_user = token_user
+        self.token_pass = token_pass
         self.header_authorization = {
                    'Content-Type': 'application/x-www-form-urlencoded',
-                   'authorization': 'Basic ZGUxMzg5YzYtNDJhMy00MjMyLWJmZjctYWRmZmE0N2EyYTRhOmdZVEdvc3ZDaEk='
+                   'authorization': os.environ['token_concil_api_rede']
         }
         self.payload = 'grant_type=password&username='+user+'&password='+password
 
     def createToken(self):
 
         r = requests.post(
-            'https://api-hom.userede.com.br/redelabs/oauth/token', verify=False,
+            BASE_URL_PROD+'/oauth/token',
             headers=self.header_authorization,
-            data=self.payload)
+            data=self.payload,
+            auth=(self.token_user, self.token_pass))
 
         assert (r.status_code == 200), "Token request error"
 
-        return json.loads(r.text) 
+        return json.loads(r.text)
 
 
 class Parameters:
@@ -48,8 +50,8 @@ class Parameters:
 
 class RequestsConciliacao:
 
-    def __init__(self, user, password, token):
-        auth = AuthorizationToken(user, password, token, True)
+    def __init__(self, user, password, token, token_user, token_pass, sandbox=False):
+        auth = AuthorizationToken(user, password, token, token_user, token_pass, sandbox)
         self.authorization = auth.createToken()
         self.token = self.authorization.get('token_type') + ' ' + self.authorization.get('access_token')
 
@@ -58,7 +60,7 @@ class RequestsConciliacao:
             'Authorization': self.token
         }
 
-        self.urlbase = BASE_URL_HOMOLOG
+        self.urlbase = BASE_URL_HOMOLOG if sandbox else BASE_URL_PROD
 
     def get(self, url, params: dict):
         r = requests.get(self.urlbase+url, headers=self.header_request, params=params)
@@ -85,26 +87,26 @@ class RequestsConciliacao:
 
         return r.json()
 
-    # C O N C I L I A C A O 
+    # C O N C I L I A C A O
     def consultarVendas(self, params: dict):
-        return self.get('/conciliation/v1/sales', params)  
+        return self.get('/conciliation/v1/sales', params)
 
     def consultarParcelas(self, params: dict):
-        return self.get('/conciliation/v1/sales/installments', params) 
+        return self.get('/conciliation/v1/sales/installments', params)
 
     def consultarPagamentosSumarizadosCIP(self, params:dict):
-        return self.get('/conciliation/v1/payments', params) 
+        return self.get('/conciliation/v1/payments', params)
 
     def _consultarpagamentosOrdemCredito(self, **kwargs):
         # MÉTODO ESTÁ COMO PRIVADO POIS ESTÁ EM CONSTRUÇÃO POR PARTE DA REDE
-        pass 
+        pass
 
     def _consultarRecebiveis(self, **kwargs):
         # MÉTODO ESTÁ COMO PRIVADO POIS ESTÁ EM CONSTRUÇÃO POR PARTE DA REDE
-        pass 
+        pass
 
     def consultarRecebiveisSumarizados(self, params):
-        url = '/conciliation/v1/receivables/summary' 
+        url = '/conciliation/v1/receivables/summary'
         return self.get(url, params)
 
     def consultarDebitos(self, params: dict):
@@ -112,23 +114,22 @@ class RequestsConciliacao:
 
     def _consultarDebitosSumarizados(self, params: dict):
         # MÉTODO ESTÁ COMO PRIVADO POIS ESTÁ EM CONSTRUÇÃO POR PARTE DA REDE
-        url = '/conciliation/v1/charges/summary' 
+        url = '/conciliation/v1/charges/summary'
         return self.get(url, None)
 
     def consultarListaAjusteDebitos(self):
         # MÉTODO COM ERRO DO LADO DA REDE...
-        url = '/conciliation/v1/charges/adjustment-types' 
+        url = '/conciliation/v1/charges/adjustment-types'
         return self.get(url, None)
 
 
     # C R E D E N C I A M E N T O
     def criarPropostaCredenciamento(self, data: dict):
-        url = '/proposal/v1/affiliates' 
+        url = '/proposal/v1/affiliates'
         return self.post(url, None, data)
 
     def consultarPropostaCredenciamentoPorId(self, id: str):
-        url = '/proposal/v1/affiliates/{id}'.format(id=id) 
-        print(url)
+        url = '/proposal/v1/affiliates/{id}'.format(id=id)
         return self.get(url, {})
 
     def consultarEstabelecimentoComercial(self, params: dict):
@@ -137,19 +138,16 @@ class RequestsConciliacao:
 
     def cancelarEstabelecimentoComercial(self, id: int):
         url = '/customer/v1/merchants/{id}/cancel'.format(id=str(id))
-        url = url
         return self.put(url)
 
     def consultarPrecos(self, params: dict):
-        url = '/proposal/v1/pricing' 
+        url = '/proposal/v1/pricing'
         return self.get(url, params)
 
     def consultarMCCs(self, params: dict):
         url = '/brand/v1/mcc'
-        return self.get(url, params) 
+        return self.get(url, params)
 
     def createLeadCredenciamento(self, params: dict, data: dict):
         url = '/proposal/v1/lead'
-        return self.post(url, params, data) 
-
-
+        return self.post(url, params, data)

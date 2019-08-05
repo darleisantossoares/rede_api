@@ -1,3 +1,4 @@
+import json
 import os
 import os.path
 import sys
@@ -15,16 +16,9 @@ def testa_formacao_url():
     }
 
     p = api.Parameters()
-    url = p.parseParametersToUrl(**params) 
+    url = p.parseParametersToUrl(**params)
 
     assert (url == '?token=123456&dtinicio=20180902&dtfim=20180903'),"Erro ao fazer parse dos parametros para url"
-
-def testa_geracao_token():
-    t = api.AuthorizationToken(
-        os.environ['user_concil_api_rede'],
-        os.environ['password_concil_api_rede'],
-        os.environ['token_concil_api_rede'])
-    return t.createToken()
 
 def testa_consulta_estabelecimentos_comerciais():
 
@@ -131,31 +125,33 @@ def build_params(parentCompanyNumber, subsidiaries, startDate, endDate):
     }
     return params
 
+def testa_geracao_token():
+    t = api.AuthorizationToken(
+        os.environ['user_concil_api_rede'],
+        os.environ['password_concil_api_rede'],
+        os.environ['token_concil_api_rede'],
+        os.environ['concil_rede_username'],
+        os.environ['concil_rede_password'])
+    return t.createToken()
+
 def mytest_consultarVendas(params):
     r = api.RequestsConciliacao(
         os.environ['user_concil_api_rede'],
         os.environ['password_concil_api_rede'],
-        os.environ['token_concil_api_rede']
+        os.environ['token_concil_api_rede'],
+        os.environ['concil_rede_username'],
+        os.environ['concil_rede_password']
     )
-    r.consultarVendas(params)
+    return r.consultarVendas(params)
 
-def test_exec_consultarVendas(parentCompanyNumber, subsidiaries):
-    for k, v in months.items():
-        startDate = k
-        endDate = v
-        print('Mês --> ' + startDate + ' - ' + endDate)
-        result = mytest_consultarVendas(build_params(parentCompanyNumber, subsidiaries, startDate, endDate))
-        # print(result)
-        if result is not None:
-            return result
 
 if __name__ == '__main__':
 
-    # testa_formacao_url()
-    # pprint(testa_geracao_token())
-    # pprint(testa_consulta_estabelecimentos_comerciais())
-    test_exec_consultarVendas('77879899', '77879899')
-    # pprint(testa_consulta_lista_ajuste_debitos())
-    # pprint(testa_consulta_pagamentos_sumarizado_cip()) # está faltando o client_id rede.exceptions.RequestGetError: 422 - {"clientId": ["Missing data for required field."]}
-    #pprint(teste_consulta_proposta_credenciamento())  # rede.exceptions.RequestGetError: 404 - "Not Found" Precisa dos dados para testar, CPF e tipo de pessoa
-    #pprint(test_consultarVendas())
+    vendas = mytest_consultarVendas({
+        'parentCompanyNumber': 77879899,
+        'subsidiaries': 77879899,
+        'startDate': '2019-07-01',
+        'endDate': '2019-07-30'
+    })
+
+    print(json.dumps(vendas, indent=2))
