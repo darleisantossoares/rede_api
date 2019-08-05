@@ -129,7 +129,6 @@ def testa_geracao_token():
     t = api.AuthorizationToken(
         os.environ['user_concil_api_rede'],
         os.environ['password_concil_api_rede'],
-        os.environ['token_concil_api_rede'],
         os.environ['concil_rede_username'],
         os.environ['concil_rede_password'])
     return t.createToken()
@@ -138,7 +137,6 @@ def mytest_consultarVendas(params):
     r = api.RequestsConciliacao(
         os.environ['user_concil_api_rede'],
         os.environ['password_concil_api_rede'],
-        os.environ['token_concil_api_rede'],
         os.environ['concil_rede_username'],
         os.environ['concil_rede_password']
     )

@@ -12,8 +12,7 @@ BASE_URL_PROD = 'https://api.userede.com.br/redelabs'
 
 class AuthorizationToken:
 
-    def __init__(self, user, password, token, token_user, token_pass, sandbox=False):
-        self.token = token
+    def __init__(self, user, password, token_user, token_pass, sandbox=False):
         self.user = user
         self.password = password
         self.token_user = token_user
@@ -55,8 +54,8 @@ class Parameters:
 
 class RequestsConciliacao:
 
-    def __init__(self, user, password, token, token_user, token_pass, sandbox=False):
-        auth = AuthorizationToken(user, password, token, token_user, token_pass, sandbox)
+    def __init__(self, user, password, token_user, token_pass, sandbox=False):
+        auth = AuthorizationToken(user, password, token_user, token_pass, sandbox)
         self.authorization = auth.createToken()
         self.token = self.authorization.get('token_type') + ' ' + self.authorization.get('access_token')
 
