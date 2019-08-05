@@ -12,7 +12,6 @@ from rede import api
 r = api.RequestsConciliacao(
     COLOCAR_SEU_USUARIO,
     COLOCAR_SUA_SENHA,
-    COLOCAR_SEU_SECRET_TOKEN,
     COLOCAR_SEU_USERNAME_REDE,
     COLOCAR_SEU_PASSWORD_REDE
 )
@@ -62,7 +61,6 @@ Até o exato momento a rede só disponibilizou o ambiente de homologação, por�
 r = api.RequestsConciliacao(
     COLOCAR_SEU_USUARIO,
     COLOCAR_SUA_SENHA,
-    COLOCAR_SEU_SECRET_TOKEN,
     COLOCAR_SEU_USERNAME_REDE,
     COLOCAR_SEU_PASSWORD_REDE,
     True
@@ -71,7 +69,6 @@ r = api.RequestsConciliacao(
 prd = api.RequestsConciliacao(
   COLOCAR_SEU_USUARIO,
   COLOCAR_SUA_SENHA,
-  COLOCAR_SEU_SECRET_TOKEN,
   COLOCAR_SEU_USERNAME_REDE,
   COLOCAR_SEU_PASSWORD_REDE,
   False
