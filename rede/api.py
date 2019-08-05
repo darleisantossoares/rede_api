@@ -145,13 +145,26 @@ class RequestsConciliacao:
         return self.put(url)
 
     def consultarPrecos(self, params: dict):
-        url = '/proposal/v1/pricing'
-        return self.get(url, params)
+        return self.get('/proposal/v1/pricing', params)
 
     def consultarMCCs(self, params: dict):
-        url = '/brand/v1/mcc'
-        return self.get(url, params)
+        return self.get('/brand/v1/mcc', params)
 
     def createLeadCredenciamento(self, params: dict, data: dict):
-        url = '/proposal/v1/lead'
-        return self.post(url, params, data)
+        return self.post('/proposal/v1/lead', params, data)
+
+    def consultarProdutosMdr(self, id: int):
+        url = '/customer/v1/merchants/{id}/products/mdr'.format(id=str(id))
+        return self.get(url)
+
+    def consultarProdutosFlex(self, id: int):
+        url = 'customer/v1/merchants/{id}/products/flex'.format(id=str(id))
+        return self.get(url)
+
+    def consultarProdutosAluguel(self, id: int):
+        url = 'customer/v1/merchants/{id}/products/technologies'.format(id=str(id))
+        return self.get(url)
+
+    def consultarDomicilioBancarioPontoVenda(self, id: int):
+        url = 'customer/v1/merchants/{id}/bank-accounts'.format(id=str(id))
+        return self.get(url)
