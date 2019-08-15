@@ -24,14 +24,13 @@ class AuthorizationToken:
         self.payload = 'grant_type=password&username='+user+'&password='+password
 
     def createToken(self):
-
         r = requests.post(
             BASE_URL_PROD+'/oauth/token',
             headers=self.header_authorization,
             data=self.payload,
             auth=(self.token_user, self.token_pass))
 
-        assert (r.status_code == 200), "Token request error"
+        assert (r.status_code == requests.codes.ok), "Token request error"
 
         return json.loads(r.text)
 
@@ -40,17 +39,6 @@ class AuthorizationToken:
         return base64.b64encode(_token.encode())
 
 
-class Parameters:
-
-    @staticmethod
-    def parseParametersToUrl(**kwargs):
-        params = ''
-        for i, (k, v) in enumerate(kwargs.items()):
-            sep = '?' if i == 0 else '&'
-            params = ''.join([params, sep, k, '=', v])
-
-        return params
-
 
 class RequestsConciliacao:
 
@@ -58,13 +46,12 @@ class RequestsConciliacao:
         auth = AuthorizationToken(user, password, token_user, token_pass, sandbox)
         self.authorization = auth.createToken()
         self.token = self.authorization.get('token_type') + ' ' + self.authorization.get('access_token')
+        self.urlbase = BASE_URL_HOMOLOG if sandbox else BASE_URL_PROD
 
         self.header_request = {
             'content-type': 'application/json',
             'Authorization': self.token
         }
-
-        self.urlbase = BASE_URL_HOMOLOG if sandbox else BASE_URL_PROD
 
     def get(self, url, params: dict):
         r = requests.get(self.urlbase+url, headers=self.header_request, params=params)
@@ -75,7 +62,6 @@ class RequestsConciliacao:
         return r.json()
 
     def post(self, url, params, data=None):
-
         r = requests.post(self.urlbase+url, headers=self.header_request, params=params, data=data)
 
         if r.status_code != requests.codes.ok:
@@ -84,7 +70,7 @@ class RequestsConciliacao:
         return r.json()
 
     def put(self, url, data=None):
-        r = requests.post(self.urlbase+url, headers=self.header_request, data=data)
+        r = requests.put(self.urlbase+url, headers=self.header_request, data=data)
 
         if r.status_code != requests.codes.ok:
             raise RequestGetError(r.status_code, r.text)

@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="rede api",
-    version="0.0.2",
+    version="0.0.4",
     author="Darlei Soares",
     author_email="darleisantossoares@gmail.com",
     license="MIT",

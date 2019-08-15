@@ -130,7 +130,8 @@ def testa_geracao_token():
         os.environ['user_concil_api_rede'],
         os.environ['password_concil_api_rede'],
         os.environ['concil_rede_username'],
-        os.environ['concil_rede_password'])
+        os.environ['concil_rede_password']
+    )
     return t.createToken()
 
 def mytest_consultarVendas(params):
@@ -149,7 +150,7 @@ if __name__ == '__main__':
         'parentCompanyNumber': 77879899,
         'subsidiaries': 77879899,
         'startDate': '2019-07-01',
-        'endDate': '2019-07-30'
+        'endDate': '2019-07-31'
     })
 
     print(json.dumps(vendas, indent=2))
