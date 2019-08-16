@@ -87,13 +87,11 @@ class RequestsConciliacao:
     def consultarPagamentosSumarizadosCIP(self, params:dict):
         return self.get('/conciliation/v1/payments', params)
 
-    def _consultarpagamentosOrdemCredito(self, **kwargs):
-        # MÉTODO ESTÁ COMO PRIVADO POIS ESTÁ EM CONSTRUÇÃO POR PARTE DA REDE
-        pass
+    def consultarpagamentosOrdemCredito(self, **kwargs):
+        return self.get('/conciliation/v1/payments/credit-orders', params)
 
-    def _consultarRecebiveis(self, **kwargs):
-        # MÉTODO ESTÁ COMO PRIVADO POIS ESTÁ EM CONSTRUÇÃO POR PARTE DA REDE
-        pass
+    def consultarRecebiveis(self, **kwargs):
+        return self.get('/conciliation/v1/receivables', params)
 
     def consultarRecebiveisSumarizados(self, params):
         url = '/conciliation/v1/receivables/summary'
@@ -102,13 +100,11 @@ class RequestsConciliacao:
     def consultarDebitos(self, params: dict):
         return self.get('/conciliation/v1/charges', params)
 
-    def _consultarDebitosSumarizados(self, params: dict):
-        # MÉTODO ESTÁ COMO PRIVADO POIS ESTÁ EM CONSTRUÇÃO POR PARTE DA REDE
+    def consultarDebitosSumarizados(self, params: dict):
         url = '/conciliation/v1/charges/summary'
         return self.get(url, None)
 
     def consultarListaAjusteDebitos(self):
-        # MÉTODO COM ERRO DO LADO DA REDE...
         url = '/conciliation/v1/charges/adjustment-types'
         return self.get(url, None)
 
