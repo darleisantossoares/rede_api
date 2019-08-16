@@ -78,19 +78,19 @@ class RequestsConciliacao:
         return r.json()
 
     # C O N C I L I A C A O
-    def consultarVendas(self, params: dict):
+    def consultarVendas(self, params):
         return self.get('/conciliation/v1/sales', params)
 
     def consultarParcelas(self, params: dict):
         return self.get('/conciliation/v1/sales/installments', params)
 
-    def consultarPagamentosSumarizadosCIP(self, params:dict):
+    def consultarPagamentosSumarizadosCIP(self, params):
         return self.get('/conciliation/v1/payments', params)
 
-    def consultarpagamentosOrdemCredito(self, **kwargs):
+    def consultarpagamentosOrdemCredito(self, params):
         return self.get('/conciliation/v1/payments/credit-orders', params)
 
-    def consultarRecebiveis(self, **kwargs):
+    def consultarRecebiveis(self, params):
         return self.get('/conciliation/v1/receivables', params)
 
     def consultarRecebiveisSumarizados(self, params):
@@ -100,7 +100,7 @@ class RequestsConciliacao:
     def consultarDebitos(self, params: dict):
         return self.get('/conciliation/v1/charges', params)
 
-    def consultarDebitosSumarizados(self, params: dict):
+    def consultarDebitosSumarizados(self, params):
         url = '/conciliation/v1/charges/summary'
         return self.get(url, None)
 
