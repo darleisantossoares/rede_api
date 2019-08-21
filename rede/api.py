@@ -88,7 +88,7 @@ class RequestsConciliacao:
         return self.get('/conciliation/v1/payments', params)
 
     def consultarpagamentosOrdemCredito(self, params):
-        # método não finalizado pela rede 
+        # método não finalizado pela rede
         return self.get('/conciliation/v1/payments/credit-orders', params)
 
     def consultarRecebiveis(self, params):
@@ -103,7 +103,7 @@ class RequestsConciliacao:
 
     def consultarDebitosSumarizados(self, params):
         url = '/conciliation/v1/charges/summary'
-        return self.get(url, None)
+        return self.get(url, params)
 
     def consultarListaAjusteDebitos(self):
         url = '/conciliation/v1/charges/adjustment-types'
